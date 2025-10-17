@@ -1,0 +1,135 @@
+nav {
+	display: flex;
+	height: 3em;
+	align-items: center;
+	gap: 1em;
+	padding: 0.5em;
+	background-color: hsl(var(--color-h), 50%, 25%, 1);
+	position: sticky;
+	top: 0;
+	box-shadow: var(--box-shadow);
+}
+	#logo {
+		height: 3em;
+	}
+	#skip-to-content {
+		opacity: 0;
+		width: 0;
+	}
+		#skip-to-content:focus {
+			opacity: 1;
+			width: unset;
+		}
+	nav img {
+		height: 2em;
+	}
+	#nav-gradient {
+		height: 20vh;
+		width: 100%;
+		left: 0;
+		right: 0;
+		position: absolute;
+		z-index: -1;
+	}
+	nav > a {
+		text-decoration: none;
+		letter-spacing: 1px;
+		margin-right: 1em;
+	}
+
+main {
+	background-color: var(--color-bg2);
+	margin: auto;
+	margin-top: 1em;
+	padding: 0.5em;
+	max-width: 90ch;
+	box-shadow: var(--box-shadow);
+	overflow-x: hidden;
+}
+	h1 {
+		margin-left: -0.25em;
+		margin-top: -0.25em;
+		padding: 0.25em;
+		width: 100%;
+		background-color: hsl(var(--color-h), 40%, 20%);
+		box-shadow: var(--box-shadow);
+	}
+
+.fancy-bg {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0.75;
+	background-image: url("/assets/space/galaxy.webp");
+	background-position: center;
+	background-size: cover;
+}
+	@keyframes fancy-bg-scroll {
+		from { background-position-y: 25%; }
+		to { background-position-y: 75%; }
+	}
+	.fancy-bg::after {
+		display: block;
+		width: 100%;
+		height: 100%;
+		content: " ";
+		background-image: url("/assets/space/orange.webp");
+		opacity: 0.5;
+		animation-name: fancy-bg-scroll;
+		animation-duration: 1ms; /* Firefox requires this to apply the animation */
+		animation-direction: alternate;
+		animation-timeline: scroll(block nearest);
+	}
+	@keyframes fancy-bg-scroll {
+		from { background-position-y: 50%; }
+		to { background-position-y: 60%; }
+	}
+	.fancy-bg::before {
+		display: block;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		content: " ";
+		background-image: url("/assets/space/purple.webp");
+		opacity: 0.5;
+		animation-name: fancy-bg-scroll-2;
+		animation-duration: 1ms; /* Firefox requires this to apply the animation */
+		animation-direction: alternate;
+		animation-timeline: scroll(block nearest)
+	}
+
+.flex-gallery {
+	display: flex;
+	gap: 0.5em;
+	flex-wrap: wrap;
+	flex-basis: 40%;
+}
+	.flex-gallery > * {
+		background-color: hsl(var(--color-h), 40%, 20%);
+		flex-grow: 1;
+		min-height: 10em;
+		min-width: 10em;
+		box-shadow: var(--box-shadow);
+	}
+	.flex-gallery > * > img {
+		height: 100%;
+		max-width: 20ch;
+		object-fit: contain;
+	}
+
+.selline {
+	position: relative;
+}
+	.selline::after {
+		content: " ";
+		position: absolute;
+		background-color: var(--highlight);
+		left: 0.1em;
+		right: 0.1em;
+		top: 120%;
+		height: 0.2em;
+		border-radius: 0.1em;
+		box-shadow: var(--box-shadow);
+	}

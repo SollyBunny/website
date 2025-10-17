@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SVG Round Rectangle</title>
+	<style>
+		svg {
+			border: 1px solid #ccc;
+			overflow: visible; /* ensures rounded corners are fully visible */
+			width: 500px;
+			height: 400px;
+		}
+		label {
+			display: block;
+			margin-top: 8px;
+		}
+		input {
+			width: 60px;
+			margin-right: 12px;
+		}
+		#output {
+			display: flex;
+		}
+	</style>
+</head>
+<body>
+	<h1>SVG Round Rectangle Generator</h1>
+
+	<!-- Rectangle coordinates and size -->
+	<label>
+		X: <input type="number" id="x" value="100">
+	</label>
+	<label>
+		Y: <input type="number" id="y" value="100">
+	</label>
+	<label>
+		Width: <input type="number" id="w" value="300">
+	</label>
+	<label>
+		Height: <input type="number" id="h" value="200">
+	</label>
+
+	<!-- Corner radii (tl, tr, br, bl) -->
+	<label>
+		Top-left radius (rx ry): 
+		<input type="number" id="r1x" value="20"> <input type="number" id="r1y" value="20">
+	</label>
+	<label>
+		Top-right radius (rx ry): 
+		<input type="number" id="r2x" value="20"> <input type="number" id="r2y" value="20">
+	</label>
+	<label>
+		Bottom-right radius (rx ry): 
+		<input type="number" id="r3x" value="20"> <input type="number" id="r3y" value="20">
+	</label>
+	<label>
+		Bottom-left radius (rx ry): 
+		<input type="number" id="r4x" value="20"> <input type="number" id="r4y" value="20">
+	</label>
+
+	<label>
+		Compact: <input type="checkbox" checked id="compact">
+	</label>
+
+	<h2>Output</h2>
+	<div id="output">
+		<textarea readonly id="textarea" rows="4" cols="60"></textarea>
+
+		<svg id="svg">
+			<path id="path" fill="none" stroke="black" stroke-width="2"></path>
+		</svg>
+	</div>
+
+	<p>
+Ever wanted to make a rounded rectangle in SVG and died because there's no online generator for it<br>
+Well now there is <br>
+This was written mostly by AI
+	</p>
+
+	<script>
+		function generateRoundedRect(x, y, width, height, radii = {}, compact) {
+			const { tl = [0, 0], tr = [0, 0], br = [0, 0], bl = [0, 0] } = radii;
+
+			if (compact)
+				return `M${x + tl[0]},${y}H${x + width - tr[0]}A${tr[0]},${tr[1]} 0 0 1${x + width},${y + tr[1]}V${y + height - br[1]}A${br[0]},${br[1]} 0 0 1${x + width - br[0]},${y + height}H${x + bl[0]}A${bl[0]},${bl[1]} 0 0 1${x},${y + height - bl[1]}V${y + tl[1]}A${tl[0]},${tl[1]} 0 0 1${x + tl[0]},${y}Z`;
+
+			return `M ${x + tl[0]},${y}
+H ${x + width - tr[0]}
+A ${tr[0]},${tr[1]} 0 0 1 ${x + width},${y + tr[1]}
+V ${y + height - br[1]}
+A ${br[0]},${br[1]} 0 0 1 ${x + width - br[0]},${y + height}
+H ${x + bl[0]}
+A ${bl[0]},${bl[1]} 0 0 1 ${x},${y + height - bl[1]}
+V ${y + tl[1]}
+A ${tl[0]},${tl[1]} 0 0 1 ${x + tl[0]},${y}
+Z`;
+		}
+
+		function updateSVG() {
+			const x = parseFloat(document.getElementById('x').value);
+			const y = parseFloat(document.getElementById('y').value);
+			const width = parseFloat(document.getElementById('w').value);
+			const height = parseFloat(document.getElementById('h').value);
+
+			const tl = [parseFloat(document.getElementById('r1x').value), parseFloat(document.getElementById('r1y').value)];
+			const tr = [parseFloat(document.getElementById('r2x').value), parseFloat(document.getElementById('r2y').value)];
+			const br = [parseFloat(document.getElementById('r3x').value), parseFloat(document.getElementById('r3y').value)];
+			const bl = [parseFloat(document.getElementById('r4x').value), parseFloat(document.getElementById('r4y').value)];
+
+			const pathData = generateRoundedRect(x, y, width, height, { tl, tr, br, bl }, document.getElementById("compact").checked);
+
+			// Update SVG
+			const pathElement = document.getElementById('path');
+			pathElement.setAttribute('d', pathData);
+
+			// Update textarea
+			document.getElementById('textarea').value = pathData;
+		}
+
+		// Add event listeners to all inputs
+		const inputs = document.querySelectorAll('input');
+		inputs.forEach(input => input.addEventListener('input', updateSVG));
+
+		// Initial draw
+		updateSVG();
+		</script>
+</body>
+</html>

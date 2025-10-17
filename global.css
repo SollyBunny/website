@@ -1,0 +1,32 @@
+@font-face {
+	font-family: "iosevka";
+	src: url("assets/fonts/iosevka.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+:root {
+	--color-h: 310deg;
+	--color-fg: hsl(var(--color-h), 10%, 90%);
+	--color-bg: hsl(var(--color-h), 10%, 10%);
+	--color-bg2: hsl(var(--color-h), 20%, 10%);
+	--highlight: hsl(var(--color-h), 100%, 50%, 0.5);
+	--box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+* {
+	color: var(--color-fg);
+	font-family: iosevka;
+}
+
+::selection {
+	background-color: var(--highlight);
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background-color: var(--color-bg);
+}
+
